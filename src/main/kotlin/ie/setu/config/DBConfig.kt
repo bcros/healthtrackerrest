@@ -39,9 +39,6 @@ class DbConfig{
 
         logger.info{"db url - connection: " + dbConfig.url}
 
-        return dbConfig
-
-
         logger.info{"DbConfig name = " + dbConfig.name}
         logger.info{"DbConfig url = " + dbConfig.url}
 
