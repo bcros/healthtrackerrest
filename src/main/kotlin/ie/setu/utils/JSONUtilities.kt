@@ -7,8 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import kong.unirest.HttpResponse
-import kong.unirest.JsonNode
+// import kong.unirest.HttpResponse
+// import kong.unirest.JsonNode
 
 
 //More info: https://www.baeldung.com/jackson-object-mapper-tutorial
@@ -16,19 +16,18 @@ import kong.unirest.JsonNode
 //           https://www.baeldung.com/kotlin/reified-functions
 //           https://www.baeldung.com/kotlin/generics
 
+
+// fun jsonObjectMapper(): ObjectMapper
+//         = ObjectMapper()
+//         .registerModule(JavaTimeModule())
+//         .registerModule(JodaModule())
+//         .registerModule(KotlinModule.Builder().build())
+//         .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+
 inline fun <reified T: Any> jsonToObject(json: String) : T
-    = jacksonObjectMapper()
+        = jacksonObjectMapper()
     .registerModule(JodaModule())
     .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     .readValue<T>(json)
-
-
-
-fun jsonObjectMapper(): ObjectMapper
-        = ObjectMapper()
-        .registerModule(JavaTimeModule())
-        .registerModule(JodaModule())
-        .registerModule(KotlinModule.Builder().build())
-        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
 
 
