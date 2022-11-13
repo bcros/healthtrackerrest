@@ -8,15 +8,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserDAO {
 
-    /** Moving to postgresql database
-    private val users = arrayListOf<User>(
-        User(name = "Geddy Lee", email = "geddy.lee@rush.com", id = 0),
-        User(name = "Alex Lifeson", email = "alex.lifeson@rush.com", id = 1),
-        User(name = "Neil Peart", email = "Neil.Peart@rush.com", id = 2),
-        User(name = "Eddie Van Halen", email = "Eddie@vanhalen.com", id = 3)
-    )
-    */
-
     fun getAll(): ArrayList<User> {
         val userList: ArrayList<User> = arrayListOf()
         transaction {
@@ -25,6 +16,7 @@ class UserDAO {
         }
         return userList
     }
+
     fun findById(id: Int): User?{
         return transaction {
             Users.select() {
@@ -33,21 +25,17 @@ class UserDAO {
                 .firstOrNull()
         }
     }
-    fun save(user: User){
-        transaction {
+
+    fun save(user: User) : Int?{
+        return transaction {
             Users.insert {
                 it[name] = user.name
                 it[email] = user.email
-            }
+            } get Users.id
         }
     }
-    fun delete(id: Int):Int{
-        return transaction{ Users.deleteWhere{
-            Users.id eq id
-        }
-        }
-    }
-    fun findByEmail(email: String): User?{
+
+    fun findByEmail(email: String) :User?{
         return transaction {
             Users.select() {
                 Users.email eq email}
@@ -56,8 +44,16 @@ class UserDAO {
         }
     }
 
-    fun update(id: Int, user: User){
-        transaction {
+    fun delete(id: Int):Int{
+        return transaction{
+            Users.deleteWhere{
+                Users.id eq id
+            }
+        }
+    }
+
+    fun update(id: Int, user: User): Int{
+        return transaction {
             Users.update ({
                 Users.id eq id}) {
                 it[name] = user.name
