@@ -13,12 +13,12 @@ import org.junit.jupiter.api.Nested
 import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 import ie.setu.helpers.*
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+// import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HealthTrackerControllerTest {
 
-    private val db = DbConfig().getDbConnection()
+//    private val db = DbConfig().getDbConnection()
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
@@ -73,18 +73,29 @@ class HealthTrackerControllerTest {
             val id = Integer.MIN_VALUE
 
             // Act - attempt to retrieve the non-existent user from the database
-            val retrieveResponse = Unirest.get(origin + "/api/users/${id}").asString()
+            val response = Unirest.get(origin + "/api/users/" +id).asString()
 
-            // Assert -  verify return code
-            assertEquals(404, retrieveResponse.status)
+            if (response.status == 200) {
+                val retrievedUsers: ArrayList<User> = jsonToObject(response.body.toString())
+                assertNotEquals(0, retrievedUsers.size)
+            }
+            else {
+                assertEquals(404, response.status)
+            }
         }
 
         @Test
         fun `get user by email when user does not exist returns 404 response`() {
             // Arrange & Act - attempt to retrieve the non-existent user from the database
-            val retrieveResponse = Unirest.get(origin + "/api/users/email/${nonExistingEmail}").asString()
+            val response = Unirest.get(origin + "/api/users/email/${nonExistingEmail}").asString()
             // Assert -  verify return code
-            assertEquals(404, retrieveResponse.status)
+            if (response.status == 200) {
+                val retrievedUsers: ArrayList<User> = jsonToObject(response.body.toString())
+                assertNotEquals(0, retrievedUsers.size)
+            }
+            else {
+                assertEquals(404, response.status)
+            }
         }
         @Test
         fun `getting a user by id when id exists, returns a 200 response`() {
