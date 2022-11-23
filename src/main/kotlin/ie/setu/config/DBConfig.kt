@@ -1,31 +1,27 @@
 package ie.setu.config
 
-import mu.KotlinLogging
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.name
+import mu.KotlinLogging
 
 class DbConfig{
 
-    private val logger = KotlinLogging.logger {}
-
-    //NOTE: you need the ?sslmode=require otherwise you get an error complaining about the ssl certificate
     fun getDbConnection() :Database{
 
-        logger.info{"Starting DB Connection..."}
-
-//        val dbConfig = Database.connect(
-//            "jdbc:postgresql://ec2-44-210-36-247.compute-1.amazonaws.com:5432/ddjlssefdo9c85?sslmode=require",
-//            driver = "org.postgresql.Driver",
-//            user = "ergddswteehqpd",
-//            password = "296121113cd1f3a63132b8ffbb8cd13a68ed291d3ad4e25c2b7a2cabba3d9dee")
-
         val logger = KotlinLogging.logger {}
+
         logger.info{"Starting DB Connection..."}
 
-        val PGUSER = "yrketawb"
-        val PGPASSWORD = "Nx2-stuK0ZudpI6HoLZgxpZb0P9TAbdr"
         val PGHOST = "jelani.db.elephantsql.com"
         val PGPORT = "5432"
+
+        //Test database created using handcoded SQL and Insert Statements
+        //val PGUSER = "kuwsemue"
+        //val PGPASSWORD = "zWmiFoHcieiOZIPOf-bIxWDnkzYZRl91"
+        //val PGDATABASE = "kuwsemue"
+
+        //Test database created using generated SQL and Insert Statements from Heroku
+        val PGUSER = "yrketawb"
+        val PGPASSWORD = "Nx2-stuK0ZudpI6HoLZgxpZb0P9TAbdr"
         val PGDATABASE = "yrketawb"
 
         //url format should be jdbc:postgresql://host:port/database
@@ -38,9 +34,6 @@ class DbConfig{
         )
 
         logger.info{"db url - connection: " + dbConfig.url}
-
-        logger.info{"DbConfig name = " + dbConfig.name}
-        logger.info{"DbConfig url = " + dbConfig.url}
 
         return dbConfig
     }
