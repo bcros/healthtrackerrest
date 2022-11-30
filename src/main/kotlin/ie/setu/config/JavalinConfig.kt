@@ -72,6 +72,7 @@ class JavalinConfig {
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/{user-id}", VueComponent("<user-profile></user-profile>"))
             get("/users/{user-id}/activities", VueComponent("<user-activity-overview></user-activity-overview>"))
+            get("/activities", VueComponent("<activities-overview></activities-overview>"))
         }
     }
 
