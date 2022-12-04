@@ -96,7 +96,7 @@ Vue.component("activities-overview", {
           .then(res => this.activities = res.data)
           .catch(() => alert("Error while fetching activities"));
     },
-    deleteActivity: function (id,description) {
+    deleteActivity: function (activities) {
       if (confirm('Are you sure you want to delete this activity? This action cannot be undone.', 'Warning')) {
         //user confirmed delete
         const ActivityId = activities.id;
@@ -104,7 +104,7 @@ Vue.component("activities-overview", {
         axios.delete(url)
             .then(response =>
                 //delete from the local state so Vue will reload list automatically
-                this.activities.splice(index, 1).push(response.data))
+                this.activities.splice(activities.id, 1).push(response.data))
             .catch(function (error) {
               console.log(error)
             });

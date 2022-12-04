@@ -25,9 +25,9 @@
 </template>
 
 <script>
-Vue.component('home-page',
+Vue.component('#home-page',
     {
-      template: "#home-page",
+      template: "home-page",
       data: () => ({
         users: [],
         activities: []
