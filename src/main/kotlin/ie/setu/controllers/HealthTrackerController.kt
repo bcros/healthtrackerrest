@@ -8,6 +8,9 @@ import ie.setu.utils.jsonToObject
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.*
 
+/**
+ * Definition of the Health Track Controller
+ */
 object HealthTrackerController {
 
     private val userDao = UserDAO()

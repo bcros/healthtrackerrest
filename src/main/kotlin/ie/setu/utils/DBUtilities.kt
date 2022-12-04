@@ -6,12 +6,18 @@ import ie.setu.domain.db.Activities
 import ie.setu.domain.db.Users
 import org.jetbrains.exposed.sql.ResultRow
 
+/**
+ * Defintion of function to map user object fields
+ */
 fun mapToUser(it: ResultRow) = User(
     id = it[Users.id],
     name = it[Users.name],
     email = it[Users.email]
 )
 
+/**
+ * Defintion of function to map activities object fields
+ */
 fun mapToActivity(it: ResultRow) = Activity(
     id = it[Activities.id],
     description = it[Activities.description],

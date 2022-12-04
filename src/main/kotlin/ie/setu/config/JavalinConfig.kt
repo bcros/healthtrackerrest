@@ -12,8 +12,14 @@ import io.javalin.plugin.openapi.ui.ReDocOptions
 import io.javalin.plugin.rendering.vue.VueComponent
 import io.swagger.v3.oas.models.info.Info
 
+/**
+ * Definition of Javalin Config class, including endpoints
+ */
 class JavalinConfig {
 
+    /**
+     * Definition to start the Javalin Service - either localling ore on remote Hosting service
+     */
     fun startJavalinService(): Javalin {
 
         val app = Javalin.create {
@@ -31,6 +37,9 @@ class JavalinConfig {
         return app
     }
 
+    /**
+     * Definition of function to retrieve port of service on remote Host
+     */
     private fun getRemoteAssignedPort(): Int {
         val herokuPort = System.getenv("PORT")
         return if (herokuPort != null) {
@@ -38,6 +47,9 @@ class JavalinConfig {
         } else 7000
     }
 
+    /**
+     * Definition of function to register endpoints
+     */
     private fun registerRoutes(app: Javalin) {
         app.routes {
             path("/api/users") {
@@ -76,6 +88,9 @@ class JavalinConfig {
         }
     }
 
+    /**
+     * Definition of function to add swagger documentation add-in
+     */
     fun getConfiguredOpenApiPlugin() = OpenApiPlugin(
         OpenApiOptions(
             Info().apply {

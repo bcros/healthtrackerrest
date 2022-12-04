@@ -6,8 +6,14 @@ import ie.setu.utils.mapToUser
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
+/**
+ * Manages the database transactions and returns the results of the transactions
+ */
 class UserDAO {
 
+    /**
+     * Retrieve all object from the Users table.
+     */
     fun getAll(): ArrayList<User> {
         val userList: ArrayList<User> = arrayListOf()
         transaction {
@@ -17,6 +23,10 @@ class UserDAO {
         return userList
     }
 
+    /**
+     * Finds a [user] in the Users table.
+     * @return the [user] object or NULL.
+     */
     fun findById(id: Int): User?{
         return transaction {
             Users.select() {
@@ -26,6 +36,10 @@ class UserDAO {
         }
     }
 
+    /**
+     * Adds a [user] to the Users table.
+     * @return the id of the user following the add.
+     */
     fun save(user: User) : Int?{
         return transaction {
             Users.insert {
@@ -35,6 +49,10 @@ class UserDAO {
         }
     }
 
+    /**
+     * Finds a [user] given an email address from the Users table.
+     * @return the [user] object or NULL.
+     */
     fun findByEmail(email: String) :User?{
         return transaction {
             Users.select() {
@@ -44,6 +62,9 @@ class UserDAO {
         }
     }
 
+    /**
+     * Deletes a [user] from the Users table.
+     */
     fun delete(id: Int):Int{
         return transaction{
             Users.deleteWhere{
@@ -52,6 +73,9 @@ class UserDAO {
         }
     }
 
+    /**
+     * Updates a [user] in the Users table.
+     */
     fun update(id: Int, user: User): Int{
         return transaction {
             Users.update ({
